@@ -14,6 +14,19 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+function SIDE_EFFECT (sideeffect: string) {
+    cat.sayText("sideeffect", 2000, true)
+    if (sideeffect.includes("no")) {
+        pause(1000)
+        cat.ay = 200
+    } else if (sideeffect.includes("no")) {
+        cat.ay = 900
+        controller.moveSprite(cat, 50, 0)
+    } else if (!(sideeffect.includes("jump"))) {
+        cat.ay = 300
+        controller.moveSprite(cat, 90, 0)
+    }
+}
 sprites.onDestroyed(SpriteKind.Food, function (sprite) {
     effects.clearParticles(trash)
     for (let index = 0; index < 5; index++) {
@@ -346,9 +359,6 @@ function lvlcon () {
             `, 1, 1)
         color.startFadeFromCurrent(color.Adventure, 50000)
     }
-}
-function sideeff () {
-	
 }
 function tilemap2 (bool: boolean, cat: Image, col: number, row: number) {
     let myImage: Image = null
@@ -1028,7 +1038,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     music.stopAllSounds()
     music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.UntilDone)
     if (lvl == 5) {
-        sideeff()
+    	
     }
 })
 function trashspawn (myImage: Image) {
@@ -1049,6 +1059,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.button, function (sprite, otherS
         lvl += 1
         lvlcon()
     }
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
+	
 })
 sprites.onCreated(SpriteKind.Player, function (sprite) {
     sprite.startEffect(effects.coolRadial, 7000)
